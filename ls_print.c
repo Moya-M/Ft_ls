@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 14:27:08 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/25 23:14:56 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/26 19:47:04 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -102,18 +102,22 @@ void	ft_print(t_list *begin, t_opt *opt)
 	t_file *info;
 
 	if (opt->l)
-		printf("total %lli\n", opt->blck);
+	{
+		write(1, "total ", 6);
+		ft_putnbr(opt->blck);
+		write(1, "\n", 1);
+	}
 	opt->blck = 0;
 	while (begin)
 	{
 		info = begin->content;
 		if (opt->l)
-		{/*
+		{
 			if (opt->ug)
 			{
 				ft_strdel(&(info->name));
 				info->name = info->cname;
-			}*/
+			}
 			ft_listprint(info);
 		}
 		else

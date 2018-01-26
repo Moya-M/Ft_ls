@@ -6,37 +6,13 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 18:38:11 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/25 23:47:41 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/26 19:41:57 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include <string.h>
-
-t_list	*ft_lstnew(void const *content, size_t content_size)
-{
-	t_list *tmp;
-
-	tmp = (t_list*)malloc(sizeof(t_list));
-	if (tmp)
-	{
-		if (content == NULL)
-		{
-			tmp->content = NULL;
-			tmp->content_size = 0;
-		}
-		else
-		{
-			if (!(tmp->content = malloc(content_size)))
-				return (NULL);
-			tmp->content = memcpy(tmp->content, content, content_size);
-			tmp->content_size = content_size;
-		}
-		tmp->next = NULL;
-	}
-	return (tmp);
-}
 
 void	ft_lstsortadd(t_list **begin, t_list *new, t_opt *opt)
 {
@@ -212,7 +188,8 @@ void	ft_infodel(void *ptr, size_t size, t_opt *opt)
 	t_file *info;
 
 	info = ptr;
-	ft_strdel(&(info->name));
+	if (!opt->ug)
+		ft_strdel(&(info->name));
 	ft_strdel(&(info->cname));
 	ft_strdel(&(info->date));
 	if (opt->l)
@@ -225,6 +202,7 @@ void	ft_infodel(void *ptr, size_t size, t_opt *opt)
 	ft_strdel(&(info->rep));
 	ft_bzero(ptr, size);
 	free(ptr);
+	size++;
 	ptr = NULL;
 }
 
@@ -277,6 +255,7 @@ int		ft_filereadder(const char *rep, t_opt *opt)
 			begin = ft_lstnew(info, sizeof(t_file));
 		else
 			ft_lstsortadd(&begin, ft_lstnew(info, sizeof(t_file)), opt);
+		free(info);
 	}
 	closedir(dir);
 	ft_print(begin, opt);

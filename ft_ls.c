@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/09 14:47:25 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/25 21:16:29 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/26 19:40:20 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -97,6 +97,5 @@ int		main(int ac, char **av)
 		while (i < ac)
 			ft_filereadder(av[i++], opt);
 	free(opt);
-	sleep(150000);
 	return (0);
 }
