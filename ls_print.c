@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 14:27:08 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/27 20:00:39 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/27 20:21:51 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -98,7 +98,7 @@ void	ft_listprint(t_file *info, t_opt *opt)
 		ft_countdigit(minor(info->dev)) + 4;
 	}
 	else
-		msiz = 12;//ft_countdigit(info->size);
+		msiz = opt->max;
 	size = ft_strlen(info->perm) + ft_countdigit(info->link) + msiz +
 	ft_strlen(info->grp) + ft_strlen(info->usr) + ft_strlen(info->date) +
 	ft_strlen(info->name) + ft_strlen(info->lnk) +
@@ -131,5 +131,6 @@ void	ft_print(t_list *begin, t_opt *opt)
 		}
 		begin = begin->next;
 	}
+	opt->max = 0;
 	opt->l == 0 ? ft_putchar('\n') : 0;
 }

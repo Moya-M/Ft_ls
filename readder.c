@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 18:38:11 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/27 19:42:07 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/27 20:13:55 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -176,15 +176,6 @@ t_file	*ft_fileinfo(const char *rep, char *name, t_opt *opt)
 	opt->max : ft_countdigit(info->size);
 	return (info);
 }
-
-/*
-**msize = (msize < ft_countdigit(info->size) ?
-**ft_countdigit(info->size) : msize);
-**mlink = (mlink < ft_countdigit(info->link) ?
-**ft_countdigit(info->link) : mlink);
-**mgrp = (mgrp < (int)ft_strlen(info->grp) ? ft_strlen(info->grp) : mgrp);
-**musr = (musr < (int)ft_strlen(info->usr) ? ft_strlen(info->usr) : musr);
-*/
 
 void	ft_flagurhandler(t_list *begin, t_opt *opt)
 {
