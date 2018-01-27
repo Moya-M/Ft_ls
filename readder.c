@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 18:38:11 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/26 19:41:57 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/27 19:42:07 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -99,6 +99,8 @@ char	*ft_cname(char *name, char *c)
 		out = ft_strjoin("\e[0;34;43m", name);
 	else if (c[0] == 'b')
 		out = ft_strjoin("\e[0;34;46m", name);
+	else if (c[0] == 'p')
+		out = ft_strjoin("\e[0;33m", name);
 	else
 		out = ft_strdup(name);
 	tmp = out;
@@ -107,13 +109,56 @@ char	*ft_cname(char *name, char *c)
 	return (out);
 }
 
-t_file	*ft_fileinfo(const char *rep, char *name, t_opt *opt)
+char	*ft_filedate(__darwin_time_t ftime)
+{
+	char	*tmp;
+	char	*tmp2;
+	char	*out;
+	time_t	now;
+
+	time(&now);
+	if (now - 15778476 > ftime)
+	{
+		tmp = ft_strndup(ctime(&ftime) + 4, 7);
+		tmp2 = ft_strndup(ctime(&ftime) + 19, 5);
+		out = ft_strjoin(tmp, tmp2);
+		free(tmp);
+		free(tmp2);
+	}
+	else
+		out = ft_strndup(ctime(&ftime) + 4, 12);
+	return (out);
+}
+
+void	ft_listhandler(struct stat fstat, t_file *info, t_opt *opt)
 {
 	struct group	*grp;
 	struct passwd	*psw;
+	char			*lnk;
+
+	if (!opt->l)
+		return ;
+	grp = getgrgid(fstat.st_gid);
+	psw = getpwuid(fstat.st_uid);
+	info->link = fstat.st_nlink;
+	info->grp = psw == NULL ? ft_itoa(fstat.st_uid) : ft_strdup(psw->pw_name);
+	info->usr = grp == NULL ? ft_itoa(fstat.st_gid) : ft_strdup(grp->gr_name);
+	info->size = fstat.st_size;
+	if (S_ISLNK(fstat.st_mode))
+	{
+		lnk = ft_strnew(PATH_MAX);
+		readlink(info->rep, lnk, PATH_MAX);
+		info->lnk = lnk;
+	}
+	else
+		info->lnk = ft_strnew(0);
+	info->dev = fstat.st_rdev;
+}
+
+t_file	*ft_fileinfo(const char *rep, char *name, t_opt *opt)
+{
 	struct stat		fstat;
 	t_file			*info;
-	char			*lnk;
 
 	info = malloc(sizeof(t_file));
 	info->rep = ft_strnew(ft_strlen(rep) + ft_strlen(name) + 1);
@@ -121,39 +166,24 @@ t_file	*ft_fileinfo(const char *rep, char *name, t_opt *opt)
 	info->rep = ft_strcat(info->rep, "/");
 	info->rep = ft_strcat(info->rep, name);
 	lstat(info->rep, &fstat);
-	if (opt->l)
-	{
-		grp = getgrgid(fstat.st_gid);
-		psw = getpwuid(fstat.st_uid);
-		info->link = fstat.st_nlink;
-		info->grp = psw == NULL ? ft_itoa(fstat.st_uid) : ft_strdup(psw->pw_name);
-		info->usr = grp == NULL ? ft_itoa(fstat.st_gid) : ft_strdup(grp->gr_name);
-		info->size = fstat.st_size;
-		if (S_ISLNK(fstat.st_mode))
-		{
-			lnk = ft_strnew(PATH_MAX);
-			readlink(info->rep, lnk, PATH_MAX);
-			info->lnk = lnk;
-		}
-		else
-			info->lnk = ft_strnew(0);
-		info->dev = fstat.st_rdev;
-	}
+	ft_listhandler(fstat, info, opt);
 	info->perm = ft_fileperm(fstat);
-	info->date = ft_strndup(ctime(&fstat.st_mtimespec.tv_sec) + 4, 12);
+	info->date = ft_filedate(fstat.st_mtimespec.tv_sec);
 	info->cname = opt->ug ? ft_cname(name, info->perm) : ft_strdup(name);
 	info->name = ft_strdup(name);
 	opt->blck += fstat.st_blocks;
+	opt->max = opt->max > ft_countdigit(info->size) ?
+	opt->max : ft_countdigit(info->size);
 	return (info);
 }
 
 /*
-msize = (msize < ft_countdigit(info->size) ?
-ft_countdigit(info->size) : msize);
-mlink = (mlink < ft_countdigit(info->link) ?
-ft_countdigit(info->link) : mlink);
-mgrp = (mgrp < (int)ft_strlen(info->grp) ? ft_strlen(info->grp) : mgrp);
-musr = (musr < (int)ft_strlen(info->usr) ? ft_strlen(info->usr) : musr);
+**msize = (msize < ft_countdigit(info->size) ?
+**ft_countdigit(info->size) : msize);
+**mlink = (mlink < ft_countdigit(info->link) ?
+**ft_countdigit(info->link) : mlink);
+**mgrp = (mgrp < (int)ft_strlen(info->grp) ? ft_strlen(info->grp) : mgrp);
+**musr = (musr < (int)ft_strlen(info->usr) ? ft_strlen(info->usr) : musr);
 */
 
 void	ft_flagurhandler(t_list *begin, t_opt *opt)
@@ -162,6 +192,7 @@ void	ft_flagurhandler(t_list *begin, t_opt *opt)
 	char	*rep;
 	char	*tmp;
 
+	opt->blck = 0;
 	while (begin)
 	{
 		info = begin->content;
@@ -206,7 +237,8 @@ void	ft_infodel(void *ptr, size_t size, t_opt *opt)
 	ptr = NULL;
 }
 
-void	ft_lstdelopt(t_list **alst, void (*del)(void *, size_t, t_opt *), t_opt *opt)
+void	ft_lstdelopt(t_list **alst,
+	void (*del)(void *, size_t, t_opt *), t_opt *opt)
 {
 	t_list *cur;
 	t_list *tmp;
@@ -260,7 +292,6 @@ int		ft_filereadder(const char *rep, t_opt *opt)
 	closedir(dir);
 	ft_print(begin, opt);
 	opt->ur ? ft_flagurhandler(begin, opt) : 0;
-	opt->blck = 0;
 	ft_lstdelopt(&begin, ft_infodel, opt);
 	return (1);
 }

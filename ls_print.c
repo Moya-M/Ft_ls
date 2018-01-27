@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 14:27:08 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/26 19:47:04 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/27 20:00:39 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,7 @@ char	*ft_catitoa(char *out, int link)
 	return (out);
 }
 
-char	*ft_catdev(char *out, t_file *info)
+char	*ft_catdev(char *out, t_file *info, t_opt *opt)
 {
 	char	*tmp;
 	char	*tmp2;
@@ -33,7 +33,7 @@ char	*ft_catdev(char *out, t_file *info)
 	{
 		if (!(tmp = ft_itoa(major(info->dev))))
 			exit(-1);
-		if (!(tmp2 = ft_itoa(major(info->dev))))
+		if (!(tmp2 = ft_itoa(minor(info->dev))))
 			exit(-1);
 		ft_strcat(out, tmp);
 		ft_strcat(out, ", ");
@@ -43,14 +43,17 @@ char	*ft_catdev(char *out, t_file *info)
 	}
 	else
 	{
-		tmp = ft_itoa(info->size);
-		ft_strcat(out, tmp);
+		tmp = ft_strnew(opt->max - ft_countdigit(info->size));
+		tmp = memset(tmp, ' ', opt->max - ft_countdigit(info->size));
+		tmp2 = ft_itoa(info->size);
+		ft_strcat(ft_strcat(out, tmp), tmp2);
 		ft_strdel(&tmp);
+		ft_strdel(&tmp2);
 	}
 	return (out);
 }
 
-char	*ft_catout(t_file *info, size_t size)
+char	*ft_catout(t_file *info, size_t size, t_opt *opt)
 {
 	char	*out;
 
@@ -61,10 +64,10 @@ char	*ft_catout(t_file *info, size_t size)
 	ft_catitoa(out, info->link);
 	ft_strcat(out, " ");
 	ft_strcat(out, info->grp);
-	ft_strcat(out, " ");
+	ft_strcat(out, "  ");
 	ft_strcat(out, info->usr);
 	ft_strcat(out, " ");
-	ft_catdev(out, info);
+	ft_catdev(out, info, opt);
 	ft_strcat(out, " ");
 	ft_strcat(out, info->date);
 	ft_strcat(out, " ");
@@ -78,21 +81,29 @@ char	*ft_catout(t_file *info, size_t size)
 	return (out);
 }
 
-void	ft_listprint(t_file *info)
+void	ft_listprint(t_file *info, t_opt *opt)
 {
 	size_t	size;
 	size_t	msiz;
 	char	*out;
 
+	if (opt->ug)
+	{
+		ft_strdel(&(info->name));
+		info->name = info->cname;
+	}
 	if (*info->perm == 'c' || *info->perm == 'b')
-		msiz = ft_countdigit(major(info->dev)) + ft_countdigit(minor(info->dev)) + 4;
+	{
+		msiz = ft_countdigit(major(info->dev)) +
+		ft_countdigit(minor(info->dev)) + 4;
+	}
 	else
-		msiz = ft_countdigit(info->size);
+		msiz = 12;//ft_countdigit(info->size);
 	size = ft_strlen(info->perm) + ft_countdigit(info->link) + msiz +
 	ft_strlen(info->grp) + ft_strlen(info->usr) + ft_strlen(info->date) +
 	ft_strlen(info->name) + ft_strlen(info->lnk) +
-	(ft_strlen(info->lnk) > 0 ? 4 : 0) + 7;
-	out = ft_catout(info, size);
+	(ft_strlen(info->lnk) > 0 ? 4 : 0) + 8;
+	out = ft_catout(info, size, opt);
 	write(1, out, size);
 	ft_strdel(&out);
 }
@@ -112,19 +123,13 @@ void	ft_print(t_list *begin, t_opt *opt)
 	{
 		info = begin->content;
 		if (opt->l)
-		{
-			if (opt->ug)
-			{
-				ft_strdel(&(info->name));
-				info->name = info->cname;
-			}
-			ft_listprint(info);
-		}
+			ft_listprint(info, opt);
 		else
 		{
 			ft_putstr(opt->ug ? info->cname : info->name);
-			ft_putchar(' ');
+			ft_putstr("  ");
 		}
 		begin = begin->next;
 	}
+	opt->l == 0 ? ft_putchar('\n') : 0;
 }

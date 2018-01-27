@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/12 17:13:13 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/25 16:50:54 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/27 19:03:35 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,6 +35,7 @@ typedef struct	s_opt {
 	int			ug;
 	int			t;
 	int			j;
+	int			max;
 	blkcnt_t	blck;
 }				t_opt;
 
