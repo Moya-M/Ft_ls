@@ -6,13 +6,13 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/12 17:13:13 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/27 19:03:35 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/29 15:09:27 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef FT_LS
-# define FT_LS
+#ifndef FT_LS_H
+# define FT_LS_H
 
 # include <errno.h>
 # include <grp.h>
@@ -27,6 +27,10 @@
 # include <sys/stat.h>
 # include "libft.h"
 
+/*
+**	FLAG_STRUCT
+*/
+
 typedef struct	s_opt {
 	int			ur;
 	int			r;
@@ -38,6 +42,10 @@ typedef struct	s_opt {
 	int			max;
 	blkcnt_t	blck;
 }				t_opt;
+
+/*
+**	FILE_INFO
+*/
 
 typedef	struct	s_file {
 	char		*perm;
@@ -51,8 +59,21 @@ typedef	struct	s_file {
 	char		*lnk;
 	char		*rep;
 	int			dev;
+	long		stamp;
 }				t_file;
 
-int		ft_filereadder(const char *rep, t_opt *opt);
-void	ft_print(t_list *begin, t_opt *opt);
+/*
+**	FUNCTION
+*/
+
+t_file			*ft_fileinfo(const char *rep, char *name, t_opt *opt);
+int				ft_filereadder(const char *rep, t_opt *opt);
+char			*ft_cname(char *name, char *c);
+char			*ft_filedate(__darwin_time_t ftime);
+void			ft_print(t_list *begin, t_opt *opt);
+void			ft_lstsortadd(t_list **begin, t_list *new, t_opt *opt);
+void			ft_infodel(void *ptr, size_t size, t_opt *opt);
+void			ft_lstd(t_list **alst,
+	void (*del)(void *, size_t, t_opt *), t_opt *opt);
+
 #endif
