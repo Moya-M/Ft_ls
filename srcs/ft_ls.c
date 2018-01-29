@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/09 14:47:25 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 18:14:03 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/29 20:49:53 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -82,14 +82,14 @@ int		arghandler(char **av, int i, int ac, t_opt *opt)
 {
 	DIR		*dir;
 
-	if (opt->a)
-		;
+	opt->dir = -1;
 	while (i < ac)
 	{
+		opt->dir--;
 		dir = opendir(av[i]);
 		if (dir != NULL)
 			closedir(dir);
-		else
+		else if (errno != 20)
 		{
 			ft_putstr("ft_ls: ");
 			ft_putstr(av[i]);

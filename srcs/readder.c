@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 18:38:11 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 18:19:03 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/29 20:52:21 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,7 +60,9 @@ static int	ft_printerror(const char *rep)
 
 static void	ft_printcur(const char *rep, t_opt *opt)
 {
-	if (opt->dir != 0)
+	if (opt->dir == -1 || opt->dir == 0)
+		return ;
+	if (opt->dir == 1)
 	{
 		ft_putchar('\n');
 		opt->dir = 0;
