@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/12 17:13:13 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 15:09:27 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/29 15:59:41 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,7 +25,7 @@
 # include <sys/types.h>
 # include <sys/syslimits.h>
 # include <sys/stat.h>
-# include "libft.h"
+# include "../libft/libft.h"
 
 /*
 **	FLAG_STRUCT
