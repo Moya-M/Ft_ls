@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 14:27:08 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/27 20:21:51 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/29 16:27:24 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,7 +44,7 @@ char	*ft_catdev(char *out, t_file *info, t_opt *opt)
 	else
 	{
 		tmp = ft_strnew(opt->max - ft_countdigit(info->size));
-		tmp = memset(tmp, ' ', opt->max - ft_countdigit(info->size));
+		tmp = ft_memset(tmp, ' ', opt->max - ft_countdigit(info->size));
 		tmp2 = ft_itoa(info->size);
 		ft_strcat(ft_strcat(out, tmp), tmp2);
 		ft_strdel(&tmp);
@@ -60,13 +60,13 @@ char	*ft_catout(t_file *info, size_t size, t_opt *opt)
 	if (!(out = ft_strnew(size)))
 		exit(-1);
 	ft_strcat(out, info->perm);
-	ft_strcat(out, " ");
+	ft_strcat(out, "  ");
 	ft_catitoa(out, info->link);
 	ft_strcat(out, " ");
 	ft_strcat(out, info->grp);
 	ft_strcat(out, "  ");
 	ft_strcat(out, info->usr);
-	ft_strcat(out, " ");
+	ft_strcat(out, "  ");
 	ft_catdev(out, info, opt);
 	ft_strcat(out, " ");
 	ft_strcat(out, info->date);
@@ -102,7 +102,7 @@ void	ft_listprint(t_file *info, t_opt *opt)
 	size = ft_strlen(info->perm) + ft_countdigit(info->link) + msiz +
 	ft_strlen(info->grp) + ft_strlen(info->usr) + ft_strlen(info->date) +
 	ft_strlen(info->name) + ft_strlen(info->lnk) +
-	(ft_strlen(info->lnk) > 0 ? 4 : 0) + 8;
+	(ft_strlen(info->lnk) > 0 ? 4 : 0) + 10;
 	out = ft_catout(info, size, opt);
 	write(1, out, size);
 	ft_strdel(&out);
@@ -127,10 +127,9 @@ void	ft_print(t_list *begin, t_opt *opt)
 		else
 		{
 			ft_putstr(opt->ug ? info->cname : info->name);
-			ft_putstr("  ");
+			ft_putstr("\n");
 		}
 		begin = begin->next;
 	}
 	opt->max = 0;
-	opt->l == 0 ? ft_putchar('\n') : 0;
 }

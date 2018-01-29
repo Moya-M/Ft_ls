@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/09 14:47:25 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 15:59:46 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/29 16:19:44 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -89,7 +89,7 @@ int		main(int ac, char **av)
 		ft_putstr("ls: illegal option -- ");
 		ft_putchar(c);
 		ft_putstr("\nusage: ls [-alrtGR] [file ...]\n");
-		return (-1);
+		return (1);
 	}
 	opt = ft_opthandler(av, ac);
 	i += opt->j;

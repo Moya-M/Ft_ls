@@ -6,14 +6,14 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/29 14:35:21 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 15:22:01 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/29 16:51:28 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ft_addlink(t_list **begin, t_list *prv, t_list *new, t_list *cur)
+static void	ft_addlink(t_list **begin, t_list *prv, t_list *new, t_list *cur)
 {
 	if (prv != NULL)
 	{
@@ -28,7 +28,23 @@ void	ft_addlink(t_list **begin, t_list *prv, t_list *new, t_list *cur)
 	}
 }
 
-void	ft_lstsortadd(t_list **begin, t_list *new, t_opt *opt)
+static int	ft_sortnt(t_file *ifo, t_file *nfo, t_opt *opt)
+{
+	if (opt->t == 1)
+	{
+		if (ifo->stamp - nfo->stamp > 0 && opt->r == 0)
+			return (1);
+		if (ifo->stamp - nfo->stamp < 0 && opt->r == 1)
+			return (1);
+	}
+	if (ft_strcmp(ifo->name, nfo->name) > 0 && opt->r == 1)
+		return (1);
+	if (ft_strcmp(ifo->name, nfo->name) < 0 && opt->r == 0)
+		return (1);
+	return (0);
+}
+
+void		ft_lstsortadd(t_list **begin, t_list *new, t_opt *opt)
 {
 	t_file	*ifo;
 	t_file	*nfo;
@@ -39,11 +55,7 @@ void	ft_lstsortadd(t_list **begin, t_list *new, t_opt *opt)
 	nfo = new->content;
 	cur = (*begin);
 	prv = NULL;
-	while ((opt->t == 0 &&
-		((opt->r == 1 && ft_strcmp(ifo->name, nfo->name) > 0) ||
-		(opt->r == 0 && ft_strcmp(ifo->name, nfo->name) < 0))) ||
-		(opt->t == 1 && ((opt->r == 1 && ifo->stamp - nfo->stamp < 0) ||
-		(opt->r == 0 && ifo->stamp - nfo->stamp > 0))))
+	while (ft_sortnt(ifo, nfo, opt))
 	{
 		prv = cur;
 		if (cur->next)
@@ -55,7 +67,7 @@ void	ft_lstsortadd(t_list **begin, t_list *new, t_opt *opt)
 	ft_addlink(begin, prv, new, cur);
 }
 
-void	ft_infodel(void *ptr, size_t size, t_opt *opt)
+void		ft_infodel(void *ptr, size_t size, t_opt *opt)
 {
 	t_file *info;
 
@@ -78,7 +90,8 @@ void	ft_infodel(void *ptr, size_t size, t_opt *opt)
 	ptr = NULL;
 }
 
-void	ft_lstd(t_list **alst, void (*del)(void *, size_t, t_opt *), t_opt *opt)
+void		ft_lstd(t_list **alst,
+	void (*del)(void *, size_t, t_opt *), t_opt *opt)
 {
 	t_list *cur;
 	t_list *tmp;
