@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/09 14:47:25 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 16:19:44 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/29 18:14:03 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,6 +27,7 @@ t_opt	*ft_opt(void)
 	opt->t = 0;
 	opt->max = 0;
 	opt->blck = 0;
+	opt->dir = 0;
 	return (opt);
 }
 
@@ -77,6 +78,30 @@ char	ft_optchecker(int ac, char **av)
 	return (0);
 }
 
+int		arghandler(char **av, int i, int ac, t_opt *opt)
+{
+	DIR		*dir;
+
+	if (opt->a)
+		;
+	while (i < ac)
+	{
+		dir = opendir(av[i]);
+		if (dir != NULL)
+			closedir(dir);
+		else
+		{
+			ft_putstr("ft_ls: ");
+			ft_putstr(av[i]);
+			ft_putstr(": ");
+			ft_putstr(strerror(errno));
+			ft_putchar('\n');
+		}
+		i++;
+	}
+	return (0);
+}
+
 int		main(int ac, char **av)
 {
 	char	c;
@@ -96,8 +121,11 @@ int		main(int ac, char **av)
 	if (i == ac)
 		ft_filereadder(".", opt);
 	else
+	{
+		arghandler(av, i, ac, opt);
 		while (i < ac)
 			ft_filereadder(av[i++], opt);
+	}
 	free(opt);
 	return (0);
 }

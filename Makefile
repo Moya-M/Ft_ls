@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: mmoya <marvin@le-101.fr>                   +:+   +:    +:    +:+      #
+#    By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/26 19:06:36 by mmoya        #+#   ##    ##    #+#        #
-#    Updated: 2018/01/26 19:10:58 by mmoya       ###    #+. /#+    ###.fr      #
+#    Updated: 2018/01/29 19:22:47 by mmoya       ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -24,7 +24,7 @@ SRCS =	file.c \
 
 OBJ = $(SRCS:.c=.o)
 
-HEAD = -I ./srcs/
+HEAD = -I ./includes/
 
 FLAGS = -Wall -Wextra -Werror -Ofast
 
