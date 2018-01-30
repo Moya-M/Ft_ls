@@ -34,7 +34,8 @@ static char	*ft_fileperm(struct stat fstat)
 {
 	char	*str;
 
-	str = malloc(sizeof(char) * 11);
+	if (!(str = malloc(sizeof(char) * 11)))
+		return (NULL);
 	str[0] = ft_filetype(fstat.st_mode);
 	str[1] = (fstat.st_mode & S_IRUSR) ? 'r' : '-';
 	str[2] = (fstat.st_mode & S_IWUSR) ? 'w' : '-';
@@ -71,6 +72,8 @@ static void	ft_listhandler(struct stat fstat, t_file *info, t_opt *opt)
 	}
 	else
 		info->lnk = ft_strnew(0);
+	if (!info->grp || !info->usr || !info->lnk)
+		return ;
 	info->dev = fstat.st_rdev;
 }
 
@@ -80,13 +83,15 @@ t_file		*ft_fileinfo(const char *rep, char *name, t_opt *opt)
 	t_file			*info;
 
 	info = malloc(sizeof(t_file));
-	info->rep = ft_strnew(ft_strlen(rep) + ft_strlen(name) + 1);
+	if (!(info->rep = ft_strnew(ft_strlen(rep) + ft_strlen(name) + 1)))
+		return (NULL);
 	info->rep = ft_strcat(info->rep, rep);
 	info->rep = ft_strcat(info->rep, "/");
 	info->rep = ft_strcat(info->rep, name);
 	lstat(info->rep, &fstat);
 	ft_listhandler(fstat, info, opt);
-	info->perm = ft_fileperm(fstat);
+	if (!(info->perm = ft_fileperm(fstat)))
+		return (NULL);
 	info->stamp = fstat.st_mtimespec.tv_sec;
 	info->date = ft_filedate(fstat.st_mtimespec.tv_sec);
 	info->cname = opt->ug ? ft_cname(name, info->perm) : ft_strdup(name);
@@ -94,5 +99,7 @@ t_file		*ft_fileinfo(const char *rep, char *name, t_opt *opt)
 	opt->blck += fstat.st_blocks;
 	opt->max = opt->max > ft_countdigit(info->size) ?
 	opt->max : ft_countdigit(info->size);
+	if (!info->date || !info->cname || !info->name)
+		return (NULL);
 	return (info);
 }

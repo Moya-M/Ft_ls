@@ -17,7 +17,8 @@ t_opt	*ft_opt(void)
 {
 	t_opt *opt;
 
-	opt = malloc(sizeof(t_opt));
+	if (!(opt = malloc(sizeof(t_opt))))
+		return (NULL);
 	opt->j = 1;
 	opt->ur = 0;
 	opt->r = 0;

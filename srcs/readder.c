@@ -32,7 +32,7 @@ static void	ft_flagurhandler(t_list *begin, t_opt *opt)
 			rep = ft_strjoin("\n", info->rep);
 			ft_strdel(&rep);
 			ft_filereadder(info->rep, opt);
-		}
+		}// REP CHELOU
 		begin = begin->next;
 	}
 }
