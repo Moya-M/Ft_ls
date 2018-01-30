@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 14:27:08 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 20:55:07 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/30 16:21:10 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,8 +31,9 @@ char	*ft_catdev(char *out, t_file *info, t_opt *opt)
 
 	if (*info->perm == 'c' || *info->perm == 'b')
 	{
-		tmp = ft_itoa(major(info->dev))
-		if (!(tmp2 = ft_itoa(minor(info->dev))) || !tmp)
+		tmp = ft_itoa(major(info->dev));
+		tmp2 = ft_itoa(minor(info->dev));
+		if (!tmp || !tmp2)
 			return (NULL);
 		ft_strcat(ft_strcat(ft_strcat(out, tmp), ", "), tmp2);
 		ft_strdel(&tmp);
@@ -41,9 +42,10 @@ char	*ft_catdev(char *out, t_file *info, t_opt *opt)
 	else
 	{
 		tmp = ft_itoa(info->size);
-		if (!(tmp2 = ft_strnew(opt->max - ft_countdigit(info->size))) || !tmp)
+		tmp2 = ft_strnew(opt->max - ft_countdigit(info->size));
+		if (!tmp || !tmp2)
 			return (NULL);
-		tmp2 = ft_memset(tmp, ' ', opt->max - ft_countdigit(info->size));
+		tmp2 = ft_memset(tmp2, ' ', opt->max - ft_countdigit(info->size));
 		ft_strcat(ft_strcat(out, tmp2), tmp);
 		ft_strdel(&tmp);
 		ft_strdel(&tmp2);
@@ -121,13 +123,14 @@ void	ft_print(t_list *begin, t_opt *opt)
 		info = begin->content;
 		if (opt->l)
 			ft_listprint(info, opt);
-		else if ((i = 1))
+		else
 		{
 			ft_putstr(opt->ug ? info->cname : info->name);
 			ft_putstr("  ");
+			i = 1;
 		}
 		begin = begin->next;
 	}
 	opt->max = 0;
-	opt->dir != -1 && i == 1 ? ft_putstr("\n") : 0;
+	opt->l == 0 ? ft_putstr("\n") : 0;
 }

@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/29 14:28:49 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 14:30:07 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/30 14:35:40 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,7 +25,7 @@ char	*ft_filedate(__darwin_time_t ftime)
 	{
 		tmp = ft_strndup(ctime(&ftime) + 4, 7);
 		if (!(tmp2 = ft_strndup(ctime(&ftime) + 19, 5)) || !tmp)
-		 	return (NULL);
+			return (NULL);
 		out = ft_strjoin(tmp, tmp2);
 		free(tmp);
 		free(tmp2);

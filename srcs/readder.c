@@ -6,18 +6,16 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 18:38:11 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 20:52:21 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/30 16:20:44 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-#include <string.h>
 
 static void	ft_flagurhandler(t_list *begin, t_opt *opt)
 {
 	t_file	*info;
-	char	*rep;
 
 	opt->blck = 0;
 	while (begin)
@@ -28,11 +26,7 @@ static void	ft_flagurhandler(t_list *begin, t_opt *opt)
 		ft_strcmp(info->name, "\e[1;36m..\e[0m") != 0) &&
 		(ft_strcmp(info->name, ".") != 0 &&
 		ft_strcmp(info->name, "..") != 0))
-		{
-			rep = ft_strjoin("\n", info->rep);
-			ft_strdel(&rep);
 			ft_filereadder(info->rep, opt);
-		}// REP CHELOU
 		begin = begin->next;
 	}
 }
@@ -60,15 +54,14 @@ static int	ft_printerror(const char *rep)
 
 static void	ft_printcur(const char *rep, t_opt *opt)
 {
-	if (opt->dir == -1 || opt->dir == 0)
-		return ;
-	if (opt->dir == 1)
+	//dprintf(1, "%i\n", opt->dir);
+	if (opt->dir > 1 || opt->dir == -1)
 	{
-		ft_putchar('\n');
-		opt->dir = 0;
+		if (opt->dir == -1)
+			ft_putchar('\n');
+		ft_putstr(rep);
+		ft_putstr(":\n");
 	}
-	ft_putstr(rep);
-	ft_putstr(":\n");
 }
 
 int			ft_filereadder(const char *rep, t_opt *opt)
@@ -94,7 +87,7 @@ int			ft_filereadder(const char *rep, t_opt *opt)
 	}
 	closedir(dir);
 	ft_print(begin, opt);
-	opt->dir = 1;
+	opt->dir = -1;
 	opt->ur ? ft_flagurhandler(begin, opt) : 0;
 	ft_lstd(&begin, ft_infodel, opt);
 	return (1);

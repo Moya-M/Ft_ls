@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/09 14:47:25 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 20:49:53 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/01/30 14:54:34 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -83,10 +83,9 @@ int		arghandler(char **av, int i, int ac, t_opt *opt)
 {
 	DIR		*dir;
 
-	opt->dir = -1;
 	while (i < ac)
 	{
-		opt->dir--;
+		opt->dir++;
 		dir = opendir(av[i]);
 		if (dir != NULL)
 			closedir(dir);
@@ -119,11 +118,11 @@ int		main(int ac, char **av)
 	}
 	opt = ft_opthandler(av, ac);
 	i += opt->j;
+	arghandler(av, i, ac, opt);
 	if (i == ac)
 		ft_filereadder(".", opt);
 	else
 	{
-		arghandler(av, i, ac, opt);
 		while (i < ac)
 			ft_filereadder(av[i++], opt);
 	}
