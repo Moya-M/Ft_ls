@@ -24,13 +24,16 @@ char	*ft_filedate(__darwin_time_t ftime)
 	if (now - 15778476 > ftime)
 	{
 		tmp = ft_strndup(ctime(&ftime) + 4, 7);
-		tmp2 = ft_strndup(ctime(&ftime) + 19, 5);
+		if (!(tmp2 = ft_strndup(ctime(&ftime) + 19, 5)) || !tmp)
+		 	return (NULL);
 		out = ft_strjoin(tmp, tmp2);
 		free(tmp);
 		free(tmp2);
 	}
 	else
 		out = ft_strndup(ctime(&ftime) + 4, 12);
+	if (!out)
+		return (NULL);
 	return (out);
 }
 
@@ -53,8 +56,10 @@ char	*ft_cname(char *name, char *c)
 		out = ft_strjoin("\e[0;33m", name);
 	else
 		out = ft_strdup(name);
-	tmp = out;
-	out = ft_strjoin(out, "\e[0m");
+	if (!(tmp = out))
+		return (NULL);
+	if (!(out = ft_strjoin(out, "\e[0m")))
+		return (NULL);
 	ft_strdel(&tmp);
 	return (out);
 }

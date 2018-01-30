@@ -18,7 +18,7 @@ char	*ft_catitoa(char *out, int link)
 	char	*tmp;
 
 	if (!(tmp = ft_itoa(link)))
-		exit(-1);
+		return (NULL);
 	ft_strcat(out, tmp);
 	ft_strdel(&tmp);
 	return (out);
@@ -31,22 +31,20 @@ char	*ft_catdev(char *out, t_file *info, t_opt *opt)
 
 	if (*info->perm == 'c' || *info->perm == 'b')
 	{
-		if (!(tmp = ft_itoa(major(info->dev))))
-			exit(-1);
-		if (!(tmp2 = ft_itoa(minor(info->dev))))
-			exit(-1);
-		ft_strcat(out, tmp);
-		ft_strcat(out, ", ");
-		ft_strcat(out, tmp2);
+		tmp = ft_itoa(major(info->dev))
+		if (!(tmp2 = ft_itoa(minor(info->dev))) || !tmp)
+			return (NULL);
+		ft_strcat(ft_strcat(ft_strcat(out, tmp), ", "), tmp2);
 		ft_strdel(&tmp);
 		ft_strdel(&tmp2);
 	}
 	else
 	{
-		tmp = ft_strnew(opt->max - ft_countdigit(info->size));
-		tmp = ft_memset(tmp, ' ', opt->max - ft_countdigit(info->size));
-		tmp2 = ft_itoa(info->size);
-		ft_strcat(ft_strcat(out, tmp), tmp2);
+		tmp = ft_itoa(info->size);
+		if (!(tmp2 = ft_strnew(opt->max - ft_countdigit(info->size))) || !tmp)
+			return (NULL);
+		tmp2 = ft_memset(tmp, ' ', opt->max - ft_countdigit(info->size));
+		ft_strcat(ft_strcat(out, tmp2), tmp);
 		ft_strdel(&tmp);
 		ft_strdel(&tmp2);
 	}
@@ -58,7 +56,7 @@ char	*ft_catout(t_file *info, size_t size, t_opt *opt)
 	char	*out;
 
 	if (!(out = ft_strnew(size)))
-		exit(-1);
+		return (NULL);
 	ft_strcat(out, info->perm);
 	ft_strcat(out, "  ");
 	ft_catitoa(out, info->link);
@@ -73,10 +71,7 @@ char	*ft_catout(t_file *info, size_t size, t_opt *opt)
 	ft_strcat(out, " ");
 	ft_strcat(out, info->name);
 	if (*info->lnk != '\0')
-	{
-		ft_strcat(out, " -> ");
-		ft_strcat(out, info->lnk);
-	}
+		ft_strcat(ft_strcat(out, " -> "), info->lnk);
 	ft_strcat(out, "\n");
 	return (out);
 }
