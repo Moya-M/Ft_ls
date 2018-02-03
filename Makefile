@@ -6,7 +6,7 @@
 #    By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/26 19:06:36 by mmoya        #+#   ##    ##    #+#        #
-#    Updated: 2018/01/29 20:41:08 by mmoya       ###    #+. /#+    ###.fr      #
+#    Updated: 2018/02/03 15:30:05 by mmoya       ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -26,7 +26,7 @@ OBJ = $(SRCS:.c=.o)
 
 HEAD = -I ./includes/
 
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror -Ofast
 
 LIBPATH = ./libft/
 

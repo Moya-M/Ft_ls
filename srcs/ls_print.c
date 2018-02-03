@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 14:27:08 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/30 16:21:10 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/03 15:28:01 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -108,13 +108,11 @@ void	ft_listprint(t_file *info, t_opt *opt)
 void	ft_print(t_list *begin, t_opt *opt)
 {
 	t_file	*info;
-	int		i;
 
-	i = 0;
-	if (opt->l && opt->blck > 0)
+	if (opt->l)
 	{
 		ft_putstr("total ");
-		ft_putnbr(opt->blck);
+		ft_putnbr(opt->blck); // PUTLL
 		ft_putchar('\n');
 	}
 	opt->blck = 0;
@@ -127,7 +125,6 @@ void	ft_print(t_list *begin, t_opt *opt)
 		{
 			ft_putstr(opt->ug ? info->cname : info->name);
 			ft_putstr("  ");
-			i = 1;
 		}
 		begin = begin->next;
 	}

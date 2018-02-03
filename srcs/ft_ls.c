@@ -6,14 +6,14 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/09 14:47:25 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/30 14:54:34 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/03 15:16:53 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_opt	*ft_opt(void)
+t_opt	*opt_init(void)
 {
 	t_opt *opt;
 
@@ -32,12 +32,12 @@ t_opt	*ft_opt(void)
 	return (opt);
 }
 
-t_opt	*ft_opthandler(char **av, int ac)
+t_opt	*opt_handler(char **av, int ac)
 {
 	t_opt	*opt;
 	int		i;
 
-	opt = ft_opt();
+	opt = opt_init();
 	i = 0;
 	if (ac == 1)
 		return (opt);
@@ -59,7 +59,7 @@ t_opt	*ft_opthandler(char **av, int ac)
 	return (opt);
 }
 
-char	ft_optchecker(int ac, char **av)
+char	opt_checker(int ac, char **av)
 {
 	int		i;
 	int		j;
@@ -109,22 +109,22 @@ int		main(int ac, char **av)
 	t_opt	*opt;
 
 	i = 0;
-	if ((c = ft_optchecker(ac, av)))
+	if ((c = opt_checker(ac, av)))
 	{
 		ft_putstr("ls: illegal option -- ");
 		ft_putchar(c);
 		ft_putstr("\nusage: ls [-alrtGR] [file ...]\n");
 		return (1);
 	}
-	opt = ft_opthandler(av, ac);
+	opt = opt_handler(av, ac);
 	i += opt->j;
 	arghandler(av, i, ac, opt);
 	if (i == ac)
-		ft_filereadder(".", opt);
+		file_reader(".", opt);
 	else
 	{
 		while (i < ac)
-			ft_filereadder(av[i++], opt);
+			file_reader(av[i++], opt);
 	}
 	free(opt);
 	return (0);

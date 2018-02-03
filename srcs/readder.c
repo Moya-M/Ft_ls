@@ -6,14 +6,14 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 18:38:11 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/30 16:20:44 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/03 15:26:35 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void	ft_flagurhandler(t_list *begin, t_opt *opt)
+static void	flagurhandler(t_list *begin, t_opt *opt)
 {
 	t_file	*info;
 
@@ -26,12 +26,12 @@ static void	ft_flagurhandler(t_list *begin, t_opt *opt)
 		ft_strcmp(info->name, "\e[1;36m..\e[0m") != 0) &&
 		(ft_strcmp(info->name, ".") != 0 &&
 		ft_strcmp(info->name, "..") != 0))
-			ft_filereadder(info->rep, opt);
+			file_reader(info->rep, opt);
 		begin = begin->next;
 	}
 }
 
-static int	ft_printerror(const char *rep)
+static int	printerror(const char *rep)
 {
 	if (errno == 2)
 		return (-1);
@@ -41,7 +41,9 @@ static int	ft_printerror(const char *rep)
 		ft_putchar('\n');
 		return (1);
 	}
-	ft_putstr("ft_ls: ");
+	ft_putchar('\n');
+	ft_putstr(rep);
+	ft_putstr(":\nft_ls: ");
 	if (ft_strchr(rep, '/'))
 		ft_putstr(ft_strrchr(rep, '/') + 1);
 	else
@@ -52,9 +54,8 @@ static int	ft_printerror(const char *rep)
 	return (-1);
 }
 
-static void	ft_printcur(const char *rep, t_opt *opt)
+static void	printcur(const char *rep, t_opt *opt)
 {
-	//dprintf(1, "%i\n", opt->dir);
 	if (opt->dir > 1 || opt->dir == -1)
 	{
 		if (opt->dir == -1)
@@ -64,7 +65,7 @@ static void	ft_printcur(const char *rep, t_opt *opt)
 	}
 }
 
-int			ft_filereadder(const char *rep, t_opt *opt)
+int			file_reader(const char *rep, t_opt *opt)
 {
 	struct dirent	*file;
 	t_list			*begin;
@@ -74,8 +75,8 @@ int			ft_filereadder(const char *rep, t_opt *opt)
 	dir = opendir(rep);
 	begin = NULL;
 	if (dir == NULL)
-		return (ft_printerror(rep));
-	ft_printcur(rep, opt);
+		return (printerror(rep));
+	printcur(rep, opt);
 	while ((file = readdir(dir)) != NULL)
 	{
 		if (opt->a == 0 && file->d_name[0] == '.')
@@ -88,7 +89,7 @@ int			ft_filereadder(const char *rep, t_opt *opt)
 	closedir(dir);
 	ft_print(begin, opt);
 	opt->dir = -1;
-	opt->ur ? ft_flagurhandler(begin, opt) : 0;
+	opt->ur ? flagurhandler(begin, opt) : 0;
 	ft_lstd(&begin, ft_infodel, opt);
 	return (1);
 }
