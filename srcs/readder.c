@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 18:38:11 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/15 14:05:54 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 20:43:28 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,7 +33,7 @@ static void	flagurhandler(t_list *begin, t_opt *opt)
 
 static int	printerror(const char *rep)
 {
-	if (errno == 2)
+	if (errno == 2 || errno == 13)
 		return (-1);
 	if (errno == 20)
 	{
