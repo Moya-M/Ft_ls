@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/12 17:13:13 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/03 15:16:54 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 19:30:21 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -68,9 +68,11 @@ typedef	struct	s_file {
 */
 
 t_file			*ft_fileinfo(const char *rep, char *name, t_opt *opt);
+char			*ft_lltoa(off_t l);
 int				file_reader(const char *rep, t_opt *opt);
 char			*ft_cname(char *name, char *c);
 char			*ft_filedate(__darwin_time_t ftime);
+void			ft_putll(long long l);
 void			ft_print(t_list *begin, t_opt *opt);
 void			ft_lstsortadd(t_list **begin, t_list *new, t_opt *opt);
 void			ft_infodel(void *ptr, size_t size, t_opt *opt);

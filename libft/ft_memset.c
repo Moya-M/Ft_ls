@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/24 18:17:11 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/30 16:09:23 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 20:33:01 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,6 +22,6 @@ void	*ft_memset(void *b, int c, size_t len)
 	s = b;
 	i = 0;
 	while (len--)
-		s[i] = (unsigned char)c;
+		s[i++] = (unsigned char)c;
 	return (b);
 }

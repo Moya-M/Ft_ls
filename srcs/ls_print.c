@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 14:27:08 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/15 14:41:39 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 20:35:35 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,11 +41,11 @@ char	*ft_catdev(char *out, t_file *info, t_opt *opt)
 	}
 	else
 	{
-		tmp = ft_itoa(info->size);
+		tmp = ft_lltoa(info->size);
 		tmp2 = ft_strnew(opt->max - ft_countdigit(info->size));
 		if (!tmp || !tmp2)
 			return (NULL);
-		tmp2 = ft_memset(tmp2, ' ', opt->max - ft_countdigit(info->size));
+		ft_memset(tmp2, ' ', opt->max - ft_countdigit(info->size));
 		ft_strcat(ft_strcat(out, tmp2), tmp);
 		ft_strdel(&tmp);
 		ft_strdel(&tmp2);
@@ -112,7 +112,7 @@ void	ft_print(t_list *begin, t_opt *opt)
 	if (opt->l)
 	{
 		ft_putstr("total ");
-		ft_putnbr(opt->blck); // PUTLL
+		ft_putll(opt->blck);
 		ft_putchar('\n');
 	}
 	opt->blck = 0;
