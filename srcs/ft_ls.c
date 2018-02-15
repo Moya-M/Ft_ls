@@ -6,12 +6,12 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/09 14:47:25 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/03 15:16:53 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 14:06:31 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../includes/ft_ls.h"
 
 t_opt	*opt_init(void)
 {

@@ -6,12 +6,12 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 14:27:08 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/03 15:28:01 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 14:41:39 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../includes/ft_ls.h"
 
 char	*ft_catitoa(char *out, int link)
 {

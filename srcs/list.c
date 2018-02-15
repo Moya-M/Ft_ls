@@ -6,12 +6,12 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/29 14:35:21 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 16:51:28 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 14:06:33 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../includes/ft_ls.h"
 
 static void	ft_addlink(t_list **begin, t_list *prv, t_list *new, t_list *cur)
 {

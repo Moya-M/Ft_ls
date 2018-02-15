@@ -6,7 +6,7 @@
 #    By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/26 19:06:36 by mmoya        #+#   ##    ##    #+#        #
-#    Updated: 2018/02/03 15:30:05 by mmoya       ###    #+. /#+    ###.fr      #
+#    Updated: 2018/02/15 15:12:25 by mmoya       ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -20,7 +20,8 @@ SRCS =	file.c \
 		info.c \
 		list.c \
 		ls_print.c \
-		readder.c
+		readder.c \
+		ft_putll.c
 
 OBJ = $(SRCS:.c=.o)
 
@@ -42,7 +43,9 @@ all: $(NAME)
 
 $(NAME): $(LIBPATH)$(LIB) $(OBJ)
 	@gcc $(FLAGS) $(HEAD) $(LIBPATH)$(LIB) $(OBJ) -o $(NAME)
-	@echo " \033[1;34m$(NAME) \033[37mDONE\033[0m"
+	@echo "\033[1;44m┌──────────────────────────────┐\033[0m"
+	@echo "\033[1;44m│          ft_ls DONE          │\033[0m"
+	@echo "\033[1;44m└──────────────────────────────┘\033[0m"
 
 $(LIBPATH)$(LIB):
 	@echo $(MSG_LIB)

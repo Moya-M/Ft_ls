@@ -6,12 +6,12 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/29 14:19:34 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/29 15:11:00 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/15 14:12:23 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../includes/ft_ls.h"
 
 static char	ft_filetype(mode_t st_mode)
 {
@@ -45,7 +45,10 @@ static char	*ft_fileperm(struct stat fstat)
 	str[6] = (fstat.st_mode & S_IXGRP) ? 'x' : '-';
 	str[7] = (fstat.st_mode & S_IROTH) ? 'r' : '-';
 	str[8] = (fstat.st_mode & S_IWOTH) ? 'w' : '-';
-	str[9] = (fstat.st_mode & S_IXOTH) ? 'x' : '-';
+	if (fstat.st_mode & S_ISVTX)
+		str[9] = (fstat.st_mode & S_IXOTH) ? 't' : 'T';
+	else
+		str[9] = (fstat.st_mode & S_IXOTH) ? 'x' : '-';
 	str[10] = '\0';
 	return (str);
 }
