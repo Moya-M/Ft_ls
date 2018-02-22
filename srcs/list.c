@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/29 14:35:21 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/15 14:06:33 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/22 18:55:34 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,6 +36,7 @@ static int	ft_sortnt(t_file *ifo, t_file *nfo, t_opt *opt)
 			return (1);
 		if (ifo->stamp - nfo->stamp < 0 && opt->r == 1)
 			return (1);
+		return (0);
 	}
 	if (ft_strcmp(ifo->name, nfo->name) > 0 && opt->r == 1)
 		return (1);
