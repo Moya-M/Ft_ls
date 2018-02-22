@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/29 14:35:21 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/22 18:55:34 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/22 19:30:16 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,7 +30,7 @@ static void	ft_addlink(t_list **begin, t_list *prv, t_list *new, t_list *cur)
 
 static int	ft_sortnt(t_file *ifo, t_file *nfo, t_opt *opt)
 {
-	if (opt->t == 1)
+	if (opt->t == 1 && ifo->stamp - nfo->stamp != 0)
 	{
 		if (ifo->stamp - nfo->stamp > 0 && opt->r == 0)
 			return (1);
