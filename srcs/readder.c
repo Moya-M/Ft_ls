@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 18:38:11 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/15 20:43:28 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/02/26 18:59:29 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,7 +34,7 @@ static void	flagurhandler(t_list *begin, t_opt *opt)
 static int	printerror(const char *rep)
 {
 	if (errno == 2 || errno == 13)
-		return (-1);
+		return (1);
 	if (errno == 20)
 	{
 		ft_putstr(rep);
@@ -51,7 +51,19 @@ static int	printerror(const char *rep)
 	ft_putstr(": ");
 	ft_putstr(strerror(errno));
 	ft_putchar('\n');
-	return (-1);
+	return (1);
+}
+
+static int	errorhandler(const char *rep, DIR *dir)
+{
+	struct stat fstat;
+
+	lstat(rep, &fstat);
+	if ((fstat.st_mode & S_IXUSR) == 0)
+		return (1);
+	if (dir == NULL)
+		return (printerror(rep));
+	return (0);
 }
 
 static void	printcur(const char *rep, t_opt *opt)
@@ -74,9 +86,9 @@ int			file_reader(const char *rep, t_opt *opt)
 
 	dir = opendir(rep);
 	begin = NULL;
-	if (dir == NULL)
-		return (printerror(rep));
 	printcur(rep, opt);
+	if (errorhandler(rep, dir))
+		return (-1);
 	while ((file = readdir(dir)) != NULL)
 	{
 		if (opt->a == 0 && file->d_name[0] == '.')
