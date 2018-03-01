@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 18:38:11 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/26 19:29:43 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/01 19:00:48 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -86,9 +86,9 @@ int			file_reader(const char *rep, t_opt *opt)
 
 	dir = opendir(rep);
 	begin = NULL;
-	printcur(rep, opt);
 	if (errorhandler(rep, dir))
 		return (-1);
+	printcur(rep, opt);
 	while ((file = readdir(dir)) != NULL)
 	{
 		if (opt->a == 0 && file->d_name[0] == '.')
