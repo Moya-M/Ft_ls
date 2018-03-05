@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 18:38:11 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/01 19:00:48 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/05 20:21:28 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,17 +33,13 @@ static void	flagurhandler(t_list *begin, t_opt *opt)
 
 static int	printerror(const char *rep)
 {
-	if (errno == 2 || errno == 13)
-		return (1);
 	if (errno == 20)
 	{
 		ft_putstr(rep);
 		ft_putchar('\n');
 		return (1);
 	}
-	ft_putchar('\n');
-	ft_putstr(rep);
-	ft_putstr(":\nft_ls: ");
+	ft_putstr("ft_ls: ");
 	if (ft_strchr(rep, '/'))
 		ft_putstr(ft_strrchr(rep, '/') + 1);
 	else
@@ -56,13 +52,19 @@ static int	printerror(const char *rep)
 
 static int	errorhandler(const char *rep, DIR *dir)
 {
-	struct stat fstat;
+	struct stat	fstat;
+	int			i;
 
-	lstat(rep, &fstat);
+	i = lstat(rep, &fstat);
+	if (dir == NULL && i == 0)
+	{
+		printerror(rep);
+		return (1);
+	}
 	if ((fstat.st_mode & S_IXUSR) == 0)
 		return (1);
 	if (dir == NULL)
-		return (printerror(rep));
+		return (1);
 	return (0);
 }
 
@@ -86,9 +88,13 @@ int			file_reader(const char *rep, t_opt *opt)
 
 	dir = opendir(rep);
 	begin = NULL;
+	errno != 2 ? printcur(rep, opt) : 0;
 	if (errorhandler(rep, dir))
+	{
+		if (dir != NULL)
+			closedir(dir);
 		return (-1);
-	printcur(rep, opt);
+	}
 	while ((file = readdir(dir)) != NULL)
 	{
 		if (opt->a == 0 && file->d_name[0] == '.')

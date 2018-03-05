@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/09 14:47:25 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/01 19:00:54 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/05 16:28:28 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -89,7 +89,7 @@ int		arghandler(char **av, int i, int ac, t_opt *opt)
 		dir = opendir(av[i]);
 		if (dir != NULL)
 			closedir(dir);
-		else if (errno != 20)
+		else if (errno == 2)
 		{
 			ft_putstr("ft_ls: ");
 			ft_putstr(av[i]);
@@ -127,5 +127,6 @@ int		main(int ac, char **av)
 			file_reader(av[i++], opt);
 	}
 	free(opt);
+	sleep(500);
 	return (0);
 }
