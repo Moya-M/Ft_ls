@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 18:38:11 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/05 20:21:28 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/06 16:33:22 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -99,7 +99,8 @@ int			file_reader(const char *rep, t_opt *opt)
 	{
 		if (opt->a == 0 && file->d_name[0] == '.')
 			continue ;
-		info = ft_fileinfo(rep, file->d_name, opt);
+		if (!(info = ft_fileinfo(rep, file->d_name, opt)))
+			return (-1);
 		begin == NULL ? begin = ft_lstnew(info, sizeof(t_file)) :
 		ft_lstsortadd(&begin, ft_lstnew(info, sizeof(t_file)), opt);
 		free(info);

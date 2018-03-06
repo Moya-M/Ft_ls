@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/29 14:35:21 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/22 19:30:16 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/06 17:20:11 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -73,9 +73,10 @@ void		ft_infodel(void *ptr, size_t size, t_opt *opt)
 	t_file *info;
 
 	info = ptr;
-	if (!opt->ug)
+	if (info->name != NULL)
 		ft_strdel(&(info->name));
-	ft_strdel(&(info->cname));
+	if (info->cname != NULL)
+		ft_strdel(&(info->cname));
 	ft_strdel(&(info->date));
 	if (opt->l)
 	{

@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/29 14:28:49 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/15 14:06:34 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/06 16:33:38 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,10 +56,10 @@ char	*ft_cname(char *name, char *c)
 		out = ft_strjoin("\e[0;33m", name);
 	else
 		out = ft_strdup(name);
-	if (!(tmp = out))
-		return (NULL);
+	if (!out || !(tmp = out))
+		exit (-1);
 	if (!(out = ft_strjoin(out, "\e[0m")))
-		return (NULL);
+		exit (-1);
 	ft_strdel(&tmp);
 	return (out);
 }

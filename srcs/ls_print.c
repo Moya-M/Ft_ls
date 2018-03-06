@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 14:27:08 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/19 17:57:56 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/06 17:32:36 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -83,12 +83,12 @@ void	ft_listprint(t_file *info, t_opt *opt)
 	size_t	size;
 	size_t	msiz;
 	char	*out;
+	char	*name;
 
 	if (opt->ug)
-	{
-		ft_strdel(&(info->name));
-		info->name = info->cname;
-	}
+		name = info->cname;
+	else
+		name = info->name;
 	if (*info->perm == 'c' || *info->perm == 'b')
 	{
 		msiz = ft_countdigit(major(info->dev)) +
@@ -98,7 +98,7 @@ void	ft_listprint(t_file *info, t_opt *opt)
 		msiz = opt->max;
 	size = ft_strlen(info->perm) + ft_countdigit(info->link) + msiz +
 	ft_strlen(info->grp) + ft_strlen(info->usr) + ft_strlen(info->date) +
-	ft_strlen(info->name) + ft_strlen(info->lnk) +
+	ft_strlen(name) + ft_strlen(info->lnk) +
 	(ft_strlen(info->lnk) > 0 ? 4 : 0) + 10;
 	out = ft_catout(info, size, opt);
 	write(1, out, size);

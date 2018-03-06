@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/09 14:47:25 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/05 16:28:28 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/06 17:04:56 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,7 +37,8 @@ t_opt	*opt_handler(char **av, int ac)
 	t_opt	*opt;
 	int		i;
 
-	opt = opt_init();
+	if (!(opt = opt_init()))
+		return (NULL);
 	i = 0;
 	if (ac == 1)
 		return (opt);
@@ -116,7 +117,8 @@ int		main(int ac, char **av)
 		ft_putstr("\nusage: ls [-alrtGR] [file ...]\n");
 		return (1);
 	}
-	opt = opt_handler(av, ac);
+	if (!(opt = opt_handler(av, ac)))
+		return (-1);
 	i += opt->j;
 	arghandler(av, i, ac, opt);
 	if (i == ac)
