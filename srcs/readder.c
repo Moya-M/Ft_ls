@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 18:38:11 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/06 16:33:22 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/06 19:28:37 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,10 +59,16 @@ static int	errorhandler(const char *rep, DIR *dir)
 	if (dir == NULL && i == 0)
 	{
 		printerror(rep);
+		if (dir != NULL)
+			closedir(dir);
 		return (1);
 	}
 	if ((fstat.st_mode & S_IXUSR) == 0)
+	{
+		if (dir != NULL)
+			closedir(dir);
 		return (1);
+	}
 	if (dir == NULL)
 		return (1);
 	return (0);
@@ -90,18 +96,13 @@ int			file_reader(const char *rep, t_opt *opt)
 	begin = NULL;
 	errno != 2 ? printcur(rep, opt) : 0;
 	if (errorhandler(rep, dir))
-	{
-		if (dir != NULL)
-			closedir(dir);
 		return (-1);
-	}
 	while ((file = readdir(dir)) != NULL)
 	{
 		if (opt->a == 0 && file->d_name[0] == '.')
 			continue ;
 		if (!(info = ft_fileinfo(rep, file->d_name, opt)))
 			return (-1);
-		begin == NULL ? begin = ft_lstnew(info, sizeof(t_file)) :
 		ft_lstsortadd(&begin, ft_lstnew(info, sizeof(t_file)), opt);
 		free(info);
 	}

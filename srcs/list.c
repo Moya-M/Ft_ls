@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/29 14:35:21 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/06 17:20:11 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/06 19:09:30 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,6 +52,12 @@ void		ft_lstsortadd(t_list **begin, t_list *new, t_opt *opt)
 	t_list	*prv;
 	t_list	*cur;
 
+	new == NULL ? exit(-1) : 0;
+	if (*begin == NULL)
+	{
+		*begin = new;
+		return ;
+	}
 	ifo = (*begin)->content;
 	nfo = new->content;
 	cur = (*begin);
