@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/16 14:27:08 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/06 17:32:36 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/07 15:05:35 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,7 +53,7 @@ char	*ft_catdev(char *out, t_file *info, t_opt *opt)
 	return (out);
 }
 
-char	*ft_catout(t_file *info, size_t size, t_opt *opt)
+char	*ft_catout(t_file *info, size_t size, t_opt *opt, char *name)
 {
 	char	*out;
 
@@ -71,7 +71,7 @@ char	*ft_catout(t_file *info, size_t size, t_opt *opt)
 	ft_strcat(out, " ");
 	ft_strcat(out, info->date);
 	ft_strcat(out, " ");
-	ft_strcat(out, info->name);
+	ft_strcat(out, name);
 	if (*info->lnk != '\0')
 		ft_strcat(ft_strcat(out, " -> "), info->lnk);
 	ft_strcat(out, "\n");
@@ -100,7 +100,7 @@ void	ft_listprint(t_file *info, t_opt *opt)
 	ft_strlen(info->grp) + ft_strlen(info->usr) + ft_strlen(info->date) +
 	ft_strlen(name) + ft_strlen(info->lnk) +
 	(ft_strlen(info->lnk) > 0 ? 4 : 0) + 10;
-	out = ft_catout(info, size, opt);
+	out = ft_catout(info, size, opt, name);
 	write(1, out, size);
 	ft_strdel(&out);
 }
