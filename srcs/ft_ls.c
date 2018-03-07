@@ -6,7 +6,7 @@
 /*   By: mmoya <mmoya@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/09 14:47:25 by mmoya        #+#   ##    ##    #+#       */
-/*   Updated: 2018/03/06 19:13:48 by mmoya       ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/03/07 15:21:29 by mmoya       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -68,7 +68,7 @@ char	opt_checker(int ac, char **av)
 
 	i = 1;
 	j = 0;
-	flag = "RrlaGt";
+	flag = "RrlaGt1";
 	while (i < ac)
 	{
 		while (av[i][j++] && av[i][0] == '-')
